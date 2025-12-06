@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { stringify } from 'querystring'
 
 // クラスからインスタンス作成するobj
 const prisma = new PrismaClient()
@@ -9,4 +10,19 @@ export async function GET(
 ){
     const meetings = await prisma.meeting.findMany()
     return Response.json(meetings)
+}
+
+//会議室作成
+export async function POST(
+    request:Request,
+){
+    const body = await request.json()
+    const meeting = await prisma.meeting.create({
+        data: {
+            name: body.name,
+            date: body.date,
+            place: body.place,
+        }
+    })
+    return Response.json(meeting)
 }
