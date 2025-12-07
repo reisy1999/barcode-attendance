@@ -111,6 +111,13 @@ export default function ReceptionPage() {
           });
         }
       }
+      
+      //reset処理
+      setStaffId("");
+      setTimeout(()=> {
+        setScanResult(null);
+      },1000);
+
     } catch {
       setScanResult({
         type: "error",
