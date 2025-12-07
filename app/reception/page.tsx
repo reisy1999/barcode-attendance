@@ -1,5 +1,6 @@
 "use client";
 
+import { validateHeaderValue } from "http";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect, useRef } from "react";
 
@@ -154,6 +155,17 @@ export default function ReceptionPage() {
     );
   }
   return(
-    <div>{selectedMeeting.name}</div>
+    <div>
+      <h1>{selectedMeeting.name}</h1>
+      <form onSubmit={handleScan}>
+        <input
+          ref={inputRef}
+          type="text"
+          value={staffId}
+          onChange={(e) => setStaffId(e.target.value)}
+          placeholder="スキャン待機中"
+        />
+      </form>
+    </div>
   );
 }
