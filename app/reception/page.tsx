@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 type Meeting = {
   id: number;
@@ -71,4 +71,51 @@ export default function ReceptionPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedMeeting, router]);
 
+// バーコードスキャン処理
+  async function handleScan(e: React.FormEvent) {
+    e.preventDefault();
+    if (!staffId.trim() || !selectedMeeting) return;
+
+    try {
+      // 職員検索
+      const staffRes = await fetch(`/api/staff/${staffId}`);
+      if (!staffRes.ok) {
+        setScanResult({
+          type: "error",
+          message: "職員情報が見つかりません",
+        });
+      } else {
+        const staff: Staff = await staffRes.json();
+
+        // 出席登録
+        const attendanceRes = await fetch("/api/attendance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            staffId: staff.staffId,
+            meetingId: selectedMeeting.id,
+          }),
+        });
+
+        if (attendanceRes.ok) {
+          setScanResult({
+            type: "success",
+            message: "登録完了",
+            staff: staff,
+          });
+        } else {
+          setScanResult({
+            type: "error",
+            message: "既に登録されています",
+            staff: staff,
+          });
+        }
+      }
+    } catch {
+      setScanResult({
+        type: "error",
+        message: "通信エラーが発生しました",
+      });
+    }
+  }
 }
