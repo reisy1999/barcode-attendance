@@ -46,4 +46,29 @@ export default function ReceptionPage() {
     }
     fetchMeetings();
   }, []);
+
+  // 全画面時にinputにフォーカス
+  useEffect(() => {
+    if (selectedMeeting && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [selectedMeeting, scanResult]);
+
+  // ESCキーで全画面解除
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        if (selectedMeeting) {
+          setSelectedMeeting(null);
+          setScanResult(null);
+          setStaffId("");
+        } else {
+          router.push("/");
+        }
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedMeeting, router]);
+
 }
