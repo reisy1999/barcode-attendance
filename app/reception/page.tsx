@@ -126,6 +126,10 @@ export default function ReceptionPage() {
         inputRef.current.focus();
       }
     }, 1000);
+
+    return(
+      <div>スキャン待機中</div>
+    );
   }
 
   //会議選択画面
@@ -148,12 +152,4 @@ export default function ReceptionPage() {
       </div>
     );
   }
-
-
-  return(
-    <div>スキャン待機中</div>
-  );
 }
-
-
-
