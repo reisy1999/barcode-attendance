@@ -154,6 +154,6 @@ export default function ReceptionPage() {
     );
   }
   return(
-    <div>スキャン待機中</div>
+    <div>{selectedMeeting.name}</div>
   );
 }
