@@ -126,10 +126,6 @@ export default function ReceptionPage() {
         inputRef.current.focus();
       }
     }, 1000);
-
-    return(
-      <div>スキャン待機中</div>
-    );
   }
 
   //会議選択画面
@@ -137,10 +133,15 @@ export default function ReceptionPage() {
     setSelectedMeeting(meeting);
   };
 
+  const handleBackToTop = () => {
+    router.push('/');
+  };
+
   if(!selectedMeeting){
     return (
       <div>
         <h1>会議を選択してください</h1>
+        <button onClick={handleBackToTop}>トップに戻る</button>
         {meetings.map((meeting)=>(
           <div
             key={ meeting.id }
@@ -152,4 +153,7 @@ export default function ReceptionPage() {
       </div>
     );
   }
+  return(
+    <div>スキャン待機中</div>
+  );
 }
