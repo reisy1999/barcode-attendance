@@ -71,7 +71,7 @@ export default function ReceptionPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedMeeting, router]);
 
-// バーコードスキャン処理
+  // バーコードスキャン処理
   async function handleScan(e: React.FormEvent) {
     e.preventDefault();
     if (!staffId.trim() || !selectedMeeting) return;
@@ -111,18 +111,49 @@ export default function ReceptionPage() {
           });
         }
       }
-      
-      //reset処理
-      setStaffId("");
-      setTimeout(()=> {
-        setScanResult(null);
-      },1000);
-
     } catch {
       setScanResult({
         type: "error",
         message: "通信エラーが発生しました",
       });
     }
+
+    // リセット処理
+    setStaffId("");
+    setTimeout(() => {
+      setScanResult(null);
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 1000);
   }
+
+  //会議選択画面
+  const handleSelectMeeting = (meeting: Meeting)=> {
+    setSelectedMeeting(meeting);
+  };
+
+  if(!selectedMeeting){
+    return (
+      <div>
+        <h1>会議を選択してください</h1>
+        {meetings.map((meeting)=>(
+          <div
+            key={ meeting.id }
+            onClick={() => handleSelectMeeting(meeting)}
+          >
+            {meeting.name} - {meeting.date}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+
+  return(
+    <div>スキャン待機中</div>
+  );
 }
+
+
+
