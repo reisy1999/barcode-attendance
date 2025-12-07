@@ -154,6 +154,8 @@ export default function ReceptionPage() {
       </div>
     );
   }
+
+  //会議選択後の入力待機画面
   return(
     <div>
       <h1>{selectedMeeting.name}</h1>
@@ -166,6 +168,12 @@ export default function ReceptionPage() {
           placeholder="スキャン待機中"
         />
       </form>
+      {scanResult && (
+        <div>
+          <p>{scanResult.message}</p>
+          {scanResult.staff && <p>{scanResult.staff.name}</p>}
+        </div>
+      )}
     </div>
   );
 }
