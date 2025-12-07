@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# uketuke - 出欠管理システム
 
-## Getting Started
+会議の出欠をバーコードリーダーでスキャン管理するシステム。
 
-First, run the development server:
+## 技術スタック
+
+- Next.js 16 (App Router)
+- TypeScript
+- Prisma + SQLite
+- Tailwind CSS
+
+## セットアップ
 
 ```bash
+# 依存関係のインストール
+npm install
+
+# データベースのセットアップ
+npx prisma migrate dev
+
+# 職員データのシード（任意）
+npx prisma db seed
+
+# 開発サーバー起動
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000 でアクセス。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 使い方
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 受付モード (`/reception`)
+1. 会議を選択
+2. バーコードをスキャン → 自動で出席登録
+3. ESCキーで終了
 
-## Learn More
+### 管理モード (`/admin`)
+- 会議の作成・削除
+- 出席者の確認・手動追加・削除
+- 職員CSVインポート
 
-To learn more about Next.js, take a look at the following resources:
+## 詳細設計
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+API設計・DB設計の詳細は [DESIGN.md](./DESIGN.md) を参照。
