@@ -63,8 +63,20 @@ export default function AdminPage() {
   // 会議作成
   async function handleCreateMeeting(e: React.FormEvent): Promise<void> {
     e.preventDefault();
-    // TODO: POST /api/meeting を呼び出し、成功したら fetchMeetings() + フォームリセット
-
+    try {
+      const res = await fetch("/api/meeting", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) {
+        throw new Error("failed to create meeting");
+      }
+      await fetchMeetings();
+      setFormData({ name: "", date: "", place: "" });
+    } catch (err) {
+      console.error("会議の作成に失敗しました", err);
+    }
   }
 
   // 会議削除
@@ -80,7 +92,8 @@ export default function AdminPage() {
 
   // フォーム入力変更
   function handleFormChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    // TODO: formData を更新
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
   // ファイル選択変更
