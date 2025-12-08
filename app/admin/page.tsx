@@ -3,10 +3,6 @@
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect, useRef } from "react";
 
-// ============================================
-// 型定義
-// ============================================
-
 type Meeting = {
   id: number;
   name: string;
@@ -20,9 +16,6 @@ type MeetingFormData = {
   place: string;
 };
 
-// ============================================
-// コンポーネント
-// ============================================
 
 export default function AdminPage() {
   const router = useRouter();
@@ -47,10 +40,6 @@ export default function AdminPage() {
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [importResult, setImportResult] = useState<string | null>(null);
 
-  // ============================================
-  // useEffect
-  // ============================================
-
   // 会議一覧を取得
   useEffect(() => {
     fetchMeetings();
@@ -62,13 +51,20 @@ export default function AdminPage() {
 
   // 会議一覧取得
   async function fetchMeetings(): Promise<void> {
-    // TODO: GET /api/meeting を呼び出し、meetings を更新
+    try {
+      const res = await fetch("/api/meeting");
+      const data = await res.json();
+      setMeetings(data);
+    } catch{
+      console.error("会議一覧の取得に失敗しました");
+    }
   }
 
   // 会議作成
   async function handleCreateMeeting(e: React.FormEvent): Promise<void> {
     e.preventDefault();
     // TODO: POST /api/meeting を呼び出し、成功したら fetchMeetings() + フォームリセット
+
   }
 
   // 会議削除
@@ -122,12 +118,36 @@ export default function AdminPage() {
 
       {/* 会議一覧 */}
       <div>
-        {/* TODO: h2「会議一覧」 */}
-        {/* TODO: loading中の表示 */}
-        {/* TODO: meetings.map で各会議を表示 */}
-        {/*   - 会議名、日付、場所 */}
-        {/*   - 「出席者を見る」リンク → /admin/meeting/[id] */}
-        {/*   - 削除ボタン */}
+        <h2>会議一覧</h2>
+        {loading && <p>Loading...</p>}
+        {!loading && meetings.length === 0 && <p>会議がありません。</p>}
+        {!loading && meetings.length > 0 && (
+          <ul>
+            {meetings.map((meeting) => (
+              <li key={meeting.id}>
+                <div>
+                  <p>会議名: {meeting.name}</p>
+                  <p>日付: {meeting.date}</p>
+                  <p>場所: {meeting.place}</p>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => router.push(`/admin/meeting/${meeting.id}`)}
+                  >
+                    出席者を見る
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteMeeting(meeting.id)}
+                  >
+                    削除
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* CSVインポート */}
