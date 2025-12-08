@@ -120,7 +120,7 @@ export default function AdminPage() {
       <div>
         <h2>会議一覧</h2>
         {loading && <p>Loading...</p>}
-        {!loading && meetings.length === 0 && <p>会議がありません。</p>}
+        {!loading && meetings.length === 0 && <p>会議が未登録です</p>}
         {!loading && meetings.length > 0 && (
           <ul>
             {meetings.map((meeting) => (
