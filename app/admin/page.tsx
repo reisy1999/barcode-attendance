@@ -120,12 +120,42 @@ export default function AdminPage() {
 
       {/* 会議作成フォーム */}
       <div>
-        {/* TODO: h2「会議を作成」 */}
+        <h2>会議作成</h2>
         <form onSubmit={handleCreateMeeting}>
-          {/* TODO: name入力 */}
-          {/* TODO: date入力 */}
-          {/* TODO: place入力 */}
-          {/* TODO: 作成ボタン */}
+          <div>
+            <label htmlFor="meeting-name">会議名</label>
+            <input
+              id="meeting-name"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleFormChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="meeting-date">日付</label>
+            <input
+              id="meeting-date"
+              name="date"
+              type="date"
+              value={formData.date}
+              onChange={handleFormChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="meeting-place">場所</label>
+            <input
+              id="meeting-place"
+              name="place"
+              type="text"
+              value={formData.place}
+              onChange={handleFormChange}
+              required
+            />
+          </div>
+          <button type="submit">作成</button>
         </form>
       </div>
 
