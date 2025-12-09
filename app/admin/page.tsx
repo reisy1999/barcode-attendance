@@ -56,7 +56,7 @@ export default function AdminPage() {
       const data = await res.json();
       setMeetings(data);
     } catch{
-      console.error("会議一覧の取得に失敗しました");
+      console.error("failed to get meeting");
     }
   }
 
@@ -81,7 +81,17 @@ export default function AdminPage() {
 
   // 会議削除
   async function handleDeleteMeeting(id: number): Promise<void> {
-    // TODO: DELETE /api/meeting/:id を呼び出し、成功したら fetchMeetings()
+    try {
+      const res = await fetch(`/api/meeting/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        throw new Error("failed to delete meeting");
+      }
+      await fetchMeetings();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   // CSVインポート
