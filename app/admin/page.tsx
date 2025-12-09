@@ -75,7 +75,7 @@ export default function AdminPage() {
       await fetchMeetings();
       setFormData({ name: "", date: "", place: "" });
     } catch (err) {
-      console.error("会議の作成に失敗しました", err);
+      console.error(err);
     }
   }
 
