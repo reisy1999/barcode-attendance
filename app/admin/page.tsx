@@ -97,7 +97,32 @@ export default function AdminPage() {
   // CSVインポート
   async function handleCsvImport(e: React.FormEvent): Promise<void> {
     e.preventDefault();
-    // TODO: POST /api/staff/import を呼び出し、結果を importResult に設定
+    if (!csvFile) {
+      setImportResult("CSVファイルを選択してください");
+      return;
+    }
+
+    const body = new FormData();
+    body.append("file", csvFile);
+
+    try {
+      const res = await fetch("/api/staff/import", {
+        method: "POST",
+        body,
+      });
+      if (!res.ok) {
+        throw new Error("failed to import staff");
+      }
+      const result = await res.json();
+      setImportResult(`職員データを${result.count}件インポートしました`);
+      setCsvFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (err) {
+      console.error(err);
+      setImportResult("CSVのインポートに失敗しました");
+    }
   }
 
   // フォーム入力変更
