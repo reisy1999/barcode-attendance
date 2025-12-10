@@ -45,9 +45,6 @@ export default function AdminPage() {
     fetchMeetings();
   }, []);
 
-  // エラー管理
-  const [error, setError ] = useState<string | null>(null);
-
   // ============================================
   // 関数定義
   // ============================================
@@ -55,6 +52,7 @@ export default function AdminPage() {
   // 会議一覧取得
   async function fetchMeetings(): Promise<void> {
     setLoading(true);
+
     try {
       const res = await fetch("/api/meeting");
       const data = await res.json();
