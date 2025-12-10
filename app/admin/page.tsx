@@ -230,12 +230,17 @@ export default function AdminPage() {
 
       {/* CSVインポート */}
       <div>
-        {/* TODO: h2「職員CSVインポート」 */}
+        <h2>職員CSVインポート</h2>
         <form onSubmit={handleCsvImport}>
-          {/* TODO: ファイル選択 input[type="file"] */}
-          {/* TODO: インポートボタン */}
+          <input
+            type="file"
+            accept=".csv"
+            onChange={handleFileChange}
+            ref={fileInputRef}
+          />
+          <button type="submit">インポート</button>
         </form>
-        {/* TODO: importResult の表示 */}
+        {importResult && <p>{importResult}</p>}
       </div>
     </div>
   );
