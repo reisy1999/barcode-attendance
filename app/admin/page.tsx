@@ -45,6 +45,9 @@ export default function AdminPage() {
     fetchMeetings();
   }, []);
 
+  // エラー管理
+  const [error, setError ] = useState<string | null>(null);
+
   // ============================================
   // 関数定義
   // ============================================
