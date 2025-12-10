@@ -131,9 +131,13 @@ export default function AdminPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  // ファイル選択変更
+  //ファイル選択
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    const file = e.target.files?.[0] ?? null;
+    setCsvFile(file);
+    setImportResult(null);
   }
+
 
   // トップに戻る
   function handleBackToTop(): void {
