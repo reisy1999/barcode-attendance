@@ -52,7 +52,6 @@ export default function AdminPage() {
   // 会議一覧取得
   async function fetchMeetings(): Promise<void> {
     setLoading(true);
-
     try {
       const res = await fetch("/api/meeting");
       const data = await res.json();
