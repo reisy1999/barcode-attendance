@@ -133,7 +133,6 @@ export default function AdminPage() {
 
   // ファイル選択変更
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    // TODO: csvFile を更新
   }
 
   // トップに戻る
