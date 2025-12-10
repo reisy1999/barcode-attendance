@@ -152,8 +152,10 @@ export default function AdminPage() {
     <div>
       {/* ヘッダー */}
       <div>
-        {/* TODO: タイトル「管理モード」 */}
-        {/* TODO: トップに戻るボタン */}
+        <h1>管理モード</h1>
+        <button type="button" onClick={handleBackToTop}>
+          トップに戻る
+        </button>
       </div>
 
       {/* 会議作成フォーム */}
